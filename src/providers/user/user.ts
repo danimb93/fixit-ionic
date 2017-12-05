@@ -3,6 +3,7 @@ import 'rxjs/add/operator/toPromise';
 import { Injectable } from '@angular/core';
 
 import { Api } from '../api/api';
+import {share} from "rxjs/operator/share";
 
 /**
  * Most apps have the concept of a User. This is a simple provider
@@ -34,13 +35,14 @@ export class User {
    * the user entered on the form.
    */
   login(accountInfo: any) {
-    let seq = this.api.post('login', accountInfo).share();
+    let seq = this.api.post('usuario/auth', accountInfo).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
       if (res.status == 'success') {
         this._loggedIn(res);
       } else {
+
       }
     }, err => {
       console.error('ERROR', err);
@@ -54,11 +56,11 @@ export class User {
    * the user entered on the form.
    */
   signup(accountInfo: any) {
-    let seq = this.api.post('signup', accountInfo).share();
+    let seq = this.api.post('usuario/add', accountInfo).share();
 
     seq.subscribe((res: any) => {
       // If the API returned a successful response, mark the user as logged in
-      if (res.status == 'success') {
+      if (res.status === 200) {
         this._loggedIn(res);
       }
     }, err => {
@@ -67,6 +69,7 @@ export class User {
 
     return seq;
   }
+
 
   /**
    * Log the user out, which forgets the session

@@ -14,6 +14,7 @@ export class ItemCreatePage {
   isReadyToSave: boolean;
 
   item: any;
+  base64Image:any;
 
   form: FormGroup;
 
@@ -49,7 +50,20 @@ export class ItemCreatePage {
       this.fileInput.nativeElement.click();
     }
   }
+  /*  Acceso a la galeria de imagenes
+  accessGallery(){
+    this.camera.getPicture({
+      sourceType: this.camera.PictureSourceType.SAVEDPHOTOALBUM,
+      destinationType: this.camera.DestinationType.DATA_URL
+    }).then((imageData) => {
+      this.base64Image = 'data:image/jpeg;base64,'+imageData;
+    }, (err) => {
+      alert('Unable to take photo');
+      //console.log(err);
+    });
 
+  }
+*/
   processWebImage(event) {
     let reader = new FileReader();
     reader.onload = (readerEvent) => {
